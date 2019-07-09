@@ -16,8 +16,8 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
-          defaultView: 'dayGridMonth',
-          defaultDate: '2019-06-07',
+          defaultView: 'dayGrid',
+          defaultDate: '2019-06-12',
        header: {
         left: 'prev,next today',
         center: 'title',
@@ -36,16 +36,20 @@
         {
           title: 'Meeting',
           start: '2019-06-12T10:30:00',
+          url: 'day12_01.html',
           end: '2019-06-12T12:30:00'
         },
         {
           title: 'Lunch',
+          url: 'day12_02.html',
           start: '2019-06-12T12:00:00'
         },
         {
           title: 'Meeting',
+          url: 'day12_03.html',
           start: '2019-06-12T14:30:00'
           ,color: 'blue'
+
         },
          {
           title: 'Click for Google',
@@ -63,16 +67,19 @@
 
   <style>
         #calendar {
-          max-width: 600px;
+          max-width: 900px;
           margin: 40px auto;
-          background-color:lightsteelblue;
+          background-color:whitesmoke;
         }
       </style>
   </head>
   <body>
-    <a href='https://fullcalendar.io/docs/initialize-es6'>REFERENCE: Demo from https://fullcalendar.io/docs/initialize-es6</a>
-    <br><a href='https://fullcalendar.io/docs/initialize-globals-demo'>REFERENCE: https://fullcalendar.io/docs/initialize-globals-demo </a>
-    <hr>
+        <a href='https://fullcalendar.io/docs/initialize-es6'>REFERENCE: Demo from https://fullcalendar.io/docs/initialize-es6</a>
+        <br><a href='https://fullcalendar.io/docs/initialize-globals-demo'>REFERENCE: https://fullcalendar.io/docs/initialize-globals-demo </a>
+        <hr>
+          
+    <a href='index.html'>calandar MonthView </a> 
+    | 
     <a href='calendar_day12.html'>day 12 </a>
     <div id='calendar'></div>
 
