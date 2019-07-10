@@ -16,8 +16,8 @@ Now only use basic html scrip tag
   (Thai language)  
   
   
-> npm install 
-> npm install -g  reload 
-> reload -b  
+npm install 
+npm install -g  reload 
+reload -b  
 
 
