@@ -142,18 +142,6 @@
          return next_min(dt2)
       }
 
-      function add_min(h,m,m2){
-          var im = parseInt(m)
-          var ih = parseInt(h) 
-          im2 = im + parseInt(m2)
-          ih2 = ih  
-          while (im2 >= 60){
-            ih2 +=1 
-            im2 -= 60
-          }
-          return [ih2,im2]
-      }
-
       function date_add_min(dtstr , min_inc ){
           console.log(dtstr)
           var dt1 = new Date( dtstr )
