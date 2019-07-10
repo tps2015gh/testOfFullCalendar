@@ -5,25 +5,15 @@
 
     <link href='/node_modules/@fullcalendar/core/main.css' rel='stylesheet' />
     <link href='/node_modules/@fullcalendar/daygrid/main.css' rel='stylesheet' />
+    <link href='/node_modules/@fullcalendar/timegrid/main.css' rel='stylesheet' />
 
     <script src='/node_modules/@fullcalendar/core/main.js'></script>
     <script src='/node_modules/@fullcalendar/daygrid/main.js'></script>
+    <script src='/node_modules/@fullcalendar/timegrid/main.js'></script>
 
     <script>
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
-          defaultView: 'dayGrid',
-          defaultDate: '2019-06-12',
-       header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      events: [
+      var events = [
         {
           title: 'All Day Event',
           start: '2019-06-01'
@@ -55,14 +45,123 @@
           title: 'Click for Google',
           url: 'http://google.com/',
           start: '2019-06-04'
-        }        
-        ]
+        },
+
+        ];
+
+      var defaultDate = '2019-06-30';
+
+      var dtnext = "2019-06-30T16:30:00" ; 
+      var bookmark1  ;
+      dtnext = add_event("CAR " , dtnext , 3*60  ,"magenta");
+      bookmark1 = dtnext 
+      dtnext = add_event("นั่งรถไฟ 2" , dtnext , 14*60  ,"silver");
+      dtnext = add_event("reg-car",dtnext,19,"silver" )
+      dtnext = add_event("food",dtnext,39,"orange" )
+      dtnext = add_event("car",dtnext,29,"silver" )
+      dtnext = add_event('เที่ยวหมู่บ้านร่ม' ,dtnext,1*60+29,"green" );
+      dtnext = add_event("car",dtnext,49,"silver" )
+      dtnext = add_event('ดอยสุเทพ',dtnext,60*2,"blue" )
+      dtnext = add_event("car-hotel",dtnext,30,"silver" )
+      dtnext = add_event("rest",dtnext,40,"orange" )
+      dtnext = add_event("market+food",dtnext,60,"green" )
+      dtnext = add_event("rest",dtnext,40+30,"orange" )
+      dtnext = add_event("Pikanesual Devalai",dtnext,60+20,"green" )
+
+      dtnext = next_hour_min(dtnext,12,0)
+      dtnext = add_event("food",dtnext,60,"orange" )
+
+
+      var dtnext2 = add_event("TEST A", bookmark1 ,(1*59)+10,"pink");
+
+      dtstr2 = add_event("TEST B", dtnext2,1*60+10,"red")      
+
+
+      //==============================================================
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+          defaultView: 'timeGridWeek',
+          defaultDate: defaultDate,
+       header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: events 
         
         });
 
         calendar.render();
       });
 
+      function pad(num, size) {
+        var s = String(num);
+        while (s.length < (size || 2)) {s = "0" + s;}
+        return s;
+      }
+
+      function next_min(datestr){
+        var dt = new Date(datestr)
+        var dtnext_str = dt.valueOf() + (60 /*sec */ * 1000)
+        var dtnext = new Date(dtnext_str)
+        return dtnext.toISOString()
+      }
+      function next_hour_min(datestr,hour,min){
+        var dt = new Date(datestr)
+        var sec1 = 60 /*sec */ * 1000; 
+        var dtnext_str = dt.valueOf() + (  (hour * 60 + min )*sec1   )
+        var dtnext = new Date(dtnext_str)
+        return dtnext.toISOString()
+      }
+
+      function add_event(title, start, min_inc ,color ){
+        console.log( ">>> add_event, start = " + start )
+         var dt2 = date_add_min(start ,min_inc  )
+         console.log(title + " dt2 = " + dt2  )
+         var d1 = new Date(start).valueOf()
+         var d2 = new Date(dt2).valueOf()
+         var diffsec = Math.floor((d2 - d1)/1000)
+         var diffmin = Math.floor(diffsec/60)
+         var rec = {title:title+" /"+diffmin+"min" , start: start , end : dt2 ,color: color } 
+         events.push( rec )
+         return next_min(dt2)
+      }
+      function add_event2(title, start, end ,color ){
+         var dt2 = new Date(end).toISOString()
+         console.log(title + " dt2 = " + dt2  )
+         var d1 = new Date(start).valueOf()
+         var d2 = new Date(dt2).valueOf()
+         var diffsec = Math.floor((d2 - d1)/1000)
+         var diffmin = Math.floor(diffsec/60)
+
+         var rec = {title:title+" /"+diffmin+"min"  , start: start , end : dt2 ,color: color } 
+         events.push( rec )
+         return next_min(dt2)
+      }
+
+      function add_min(h,m,m2){
+          var im = parseInt(m)
+          var ih = parseInt(h) 
+          im2 = im + parseInt(m2)
+          ih2 = ih  
+          while (im2 >= 60){
+            ih2 +=1 
+            im2 -= 60
+          }
+          return [ih2,im2]
+      }
+
+      function date_add_min(dtstr , min_inc ){
+          console.log(dtstr)
+          var dt1 = new Date( dtstr )
+          var dt1v = dt1.valueOf()
+          var dt2v = dt1v + (min_inc * 60 * 1000) 
+          dt2  =  new Date( dt2v   )
+          return dt2.toISOString() 
+      }
     </script>
 
   <style>
